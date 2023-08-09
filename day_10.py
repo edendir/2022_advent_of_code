@@ -13,23 +13,23 @@ def signal_strength(cycle, x):
     global signal
     global G
     cycle1 = cycle - 1
-    G[cycle1//40][cycle1%40] = ('#' if abs(x-(cycle1%40))<=1 else '.')
+    G[cycle1//40][cycle1%40] = ('#' if abs(x-(cycle1%40))<=1 else ' ')
     if cycle in (20, 60, 100, 140, 180, 220):
         signal += cycle*x
     
     
 for line in lines:
     if line.startswith('noop'):
-        signal_strength(cycle, reg)
         cycle += 1
+        signal_strength(cycle, reg)
     elif line.startswith('add'):
         addx,addReg = line.split()
-        signal_strength(cycle, reg)
         cycle += 1
         signal_strength(cycle, reg)
         cycle += 1
+        signal_strength(cycle, reg)
         reg += int(addReg)
     
-print(cycle, reg, signal)
+print(signal)
 for r in range(6):
     print(''.join(G[r]))
